@@ -1,5 +1,4 @@
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "MIG-GPU-8ab9a0c8-909c-3f13-97e6-7376d6d4a029/13/0"
 
 import torch
 from dataset_carla import carlaDataset, RemapBackground

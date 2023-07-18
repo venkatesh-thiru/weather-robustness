@@ -1,0 +1,13 @@
+albumentations
+matplotlib
+numpy
+opencv_python
+pandas
+Pillow
+Pillow
+segmentation_models_pytorch
+torch
+torchmetrics
+torchvision
+tqdm
+wandb

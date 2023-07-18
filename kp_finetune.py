@@ -1,5 +1,4 @@
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "MIG-GPU-ff380879-d5b2-8469-da3d-71267d28a645/0/0"
 
 import random
 import statistics
@@ -84,12 +83,14 @@ def iterate(model, dataloader, criterion, optimizer, mode):
 # def fine_tune_iteration(model, model_kind, ):
 
 def main():
-    checkpoint_dir = "checkpoint/kp_finetune/efficientnet-b6"#CHANGEHERE
-    name = "CARLA_GEN_SEMANTIC_SEGMENTATION_efficientnet-b6(ENCODER)_FPN(DECODER)"#CHANGEHERE
-    model_file = "checkpoint/CARLA_GEN_SEMANTIC_SEGMENTATION_efficientnet-b6(ENCODER)_FPN(DECODER)"#CHANGEHERE
+    encoder = "efficientnet-b6"
+    decoder = "FPN"
+    checkpoint_dir = f"checkpoint/kp_finetune/{encoder}"#CHANGEHERE
+    name = f"CARLA_GEN_SEMANTIC_SEGMENTATION_efficientnet-b6(ENCODER)_{decoder}(DECODER)"#CHANGEHERE
+    model_file = f"checkpoint/CARLA_GEN_SEMANTIC_SEGMENTATION_{encoder}(ENCODER)_{decoder}(DECODER)"#CHANGEHERE
     weights = torch.load(model_file, map_location="cpu")
-    # iterations = [f"iteration-{i}" for i in range(1,27)]
-    iterations = [f"iteration-26"]
+    iterations = [f"iteration-{i}" for i in range(1,27)]
+
     batch_size = 3
 
     for iteration in iterations:
@@ -144,13 +145,13 @@ def main():
         test_iteration(checkpoint_path, iteration)
         wandb.finish()
 
-def test_iteration(checkpoint, iteration):
+def test_iteration(checkpoint, iteration, encoder, decoder):
     print(f"Testing {iteration}")
-    iteration_metric_path = os.path.join("metrics", "kp_finetune", "efficientnet-b6", iteration)#CHANGEHERE
+    iteration_metric_path = os.path.join("metrics", "kp_finetune", encoder, iteration)#CHANGEHERE
     os.makedirs(iteration_metric_path, exist_ok=True)
     weights = torch.load(checkpoint, map_location = "cpu")
     model = smp.FPN(
-            encoder_name="efficientnet-b6", #CHANGE HERE
+            encoder_name=encoder, #CHANGE HERE
             encoder_depth=5,
             encoder_weights="imagenet",
             decoder_dropout=0.3,

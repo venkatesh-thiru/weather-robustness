@@ -1,5 +1,4 @@
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "MIG-GPU-ff380879-d5b2-8469-da3d-71267d28a645/0/0"
 
 import random
 import statistics
@@ -93,16 +92,16 @@ def test_model(sample, model, ):
     return fig
 
 def main():
-    checkpoint_path = "checkpoint"
-    batch_size = 3
+    checkpoint_path = "checkpoint" #Checkpoint Directory
+    batch_size = 3 #Training&Validation batch size
     Epochs = 100
-    out_class = 23
-    root_dir = "DATA"
-    encoder = "efficientnet-b6"
-    decoder = "FPN"
-    training_name = f"CARLA_GEN_SEMANTIC_SEGMENTATION_{encoder}(ENCODER)_{decoder}(DECODER)"
+    out_class = 23 #carla semantic segmentation classes
+    root_dir = "DATA" #Data root directory
+    encoder = "efficientnet-b6" #Encoder
+    decoder = "FPN" # decoder
+    training_name = f"CARLA_GEN_SEMANTIC_SEGMENTATION_{encoder}(ENCODER)_{decoder}(DECODER)" #Training name
 
-    wandb.init(project="carla", name = training_name, entity="v3nkyc0d3z")
+    wandb.init(project="carla", name = training_name, entity="v3nkyc0d3z") #weights and biases logging
 
     train_image_transform = tvt.Compose([
         tvt.ToTensor(),
